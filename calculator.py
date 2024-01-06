@@ -11,7 +11,6 @@ operation_types_by_year = []
 for record in records_by_year:
     operation_types_by_year.append(pd.Series(record[columns[3]].unique()))
 
-
 # Concatena os Panda Series em um único vetor unidimensional (axis = 0)
 # Novamente remove duplicação dos tipos de operação
 operation_types = pd.concat(operation_types_by_year, axis = 0)
@@ -21,6 +20,5 @@ operation_types = operation_types.unique()
 operation_types_series = pd.Series(operation_types)
 operation_types_series.rename('Operation Types', inplace=True)
 operation_types_series.to_csv('./Operation Types.csv', index=False, header=True)
-
 
 print(operation_types)
