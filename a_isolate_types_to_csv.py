@@ -1,7 +1,14 @@
 import pandas as pd 
 
+# Salva em csv para análise
+def operation_types_to_csv(operation_types):
+    operation_types_series = pd.Series(operation_types)
+    operation_types_series.rename('Operation Types', inplace=True)
+    operation_types_series.to_csv('./Operation Types.csv', index=False, header=True)
+
+
 years = (2021, 2022, 2023)
-records_by_year = [pd.read_csv(f'./{year}/{year} - Binance Transaction Records.csv') for year in years]
+records_by_year = [pd.read_csv(f'./{year}/{year} - Binance Transaction Records.csv') for year in years] # Lista ded DataFrames
 columns = records_by_year[0].columns # --> 'User_ID', 'UTC_Time', 'Account', 'Operation', 'Coin', 'Change', 'Remark'
 operation_types_by_year = []
 
@@ -16,9 +23,4 @@ for record in records_by_year:
 operation_types = pd.concat(operation_types_by_year, axis = 0)
 operation_types = operation_types.unique()
 
-# Salva em csv para análise
-operation_types_series = pd.Series(operation_types)
-operation_types_series.rename('Operation Types', inplace=True)
-operation_types_series.to_csv('./Operation Types.csv', index=False, header=True)
-
-print(operation_types)
+operation_types_to_csv(operation_types)
